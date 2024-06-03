@@ -48,5 +48,19 @@ services:
     networks:
       - mynetwork
 
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.Intgtest
+    volumes:
+      - ./src:/home/src
+    depends_on:
+      - rabbitmq
+      - kafka
+      - zookeeper
+      - app
+    networks:
+      - mynetwork
+
 networks:
   mynetwork:

@@ -10,16 +10,6 @@ RABBITMQ_USERNAME = 'guest'
 RABBITMQ_PASSWORD = 'guest'
 BLOCKED_CONNECTION_TIMEOUT = 300
 
-data = {
-    "name": "John Doe",
-    "email": "john.doe@example.com",
-    "id": 1234,
-    "timestamp": time.time()
-}
-
-# Convert the Python dictionary to a JSON string
-DATA_PAYLOAD = json.dumps(data)
-
 class TestRabbitMQ(unittest.TestCase):
     def setUp(self):
         self.connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST))
