@@ -54,6 +54,7 @@ services:
       dockerfile: Dockerfile.Intgtest
     volumes:
       - ./src:/home/src
+      - ./test:/home/test
     depends_on:
       - rabbitmq
       - kafka
