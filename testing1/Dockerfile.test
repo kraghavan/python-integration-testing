@@ -10,6 +10,7 @@ RUN apt-get update && \
 
 RUN mkdir /src
 COPY src/ /home/src
+COPY tests/ /home/tests
 
 #CMD ["sleep", "infinity"]
-CMD ["python", "/home/src/app.py"]
+CMD ["python", "/home/tests/integration_tests.py"]
