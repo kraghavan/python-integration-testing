@@ -1,7 +1,7 @@
 import time
 import json
 import traceback
-from rabbitmq_helper import Publisher
+from rabbitmq_helper import RabbitMQPublisher
 from kafka_helper import KafkaProducer
 
 data = {
@@ -16,7 +16,7 @@ DATA_PAYLOAD = json.dumps(data)
 
 def publish_rabbitmq():
     try:
-        rabbit_publisher = Publisher()
+        rabbit_publisher = RabbitMQPublisher()
         rabbit_publisher.connect()
         rabbit_publisher.send_message(DATA_PAYLOAD)
         rabbit_publisher.close()
@@ -34,10 +34,10 @@ def publish_kafka():
         traceback.print_exc()
 
 def main():
-    time.sleep(10)
     publish_rabbitmq()
     publish_kafka()
 
 if __name__ == '__main__':
+    time.sleep(10)
     main()
 

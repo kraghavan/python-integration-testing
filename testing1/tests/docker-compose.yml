@@ -1,0 +1,16 @@
+version: '3'
+services:
+  test:
+    build:
+      context: .
+      dockerfile: tests/Dockerfile.Intgtest
+    volumes:
+      - ./src:/home/src
+      - ./test:/home/test
+    depends_on:
+      - rabbitmq
+      - kafka
+      - zookeeper
+      - app
+    networks:
+      - mynetwork

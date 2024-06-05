@@ -2,11 +2,17 @@ import unittest
 from confluent_kafka import Consumer, KafkaException
 import json
 
+KAFKA_CONTAINER_NAME = "my_kafka_container"
+KAFKA_HOST = "kafka"
+KAFKA_PORT = 9092
+KAFKA_TOPIC = 'test'
+KAFKA_BOOSTRAP_SERVERS = f"{KAFKA_HOST}:{KAFKA_PORT}"
+
 class KafkaConsumerTest(unittest.TestCase):
     def setUp(self):
         self.consumer = Consumer({
-            'bootstrap.servers': 'localhost:9092',
-            'group.id': 'test',
+            'bootstrap.servers': KAFKA_BOOSTRAP_SERVERS,
+            'group.id': KAFKA_TOPIC,
             'auto.offset.reset': 'earliest',
         })
 
@@ -27,8 +33,8 @@ class KafkaConsumerTest(unittest.TestCase):
                 self.assertEqual(data["name"], "John Doe")
                 self.assertEqual(data["email"], "john.doe@example.com")
                 self.assertEqual(data["id"], 1234)
-        except KeyboardInterrupt:
-            pass
 
+        except Exception as e:
+            print(f"An error occurred: {e}")
 if __name__ == '__main__':
     unittest.main()

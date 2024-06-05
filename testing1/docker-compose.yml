@@ -1,4 +1,5 @@
 version: '3'
+
 services:
   rabbitmq:
     container_name: my_rabbitmq_container
@@ -47,21 +48,6 @@ services:
       - zookeeper
     networks:
       - mynetwork
-
-  test:
-    build:
-      context: .
-      dockerfile: Dockerfile.Intgtest
-    volumes:
-      - ./src:/home/src
-      - ./test:/home/test
-    depends_on:
-      - rabbitmq
-      - kafka
-      - zookeeper
-      - app
-    networks:
-      - mynetwork
-
+      
 networks:
   mynetwork:

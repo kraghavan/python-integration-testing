@@ -7,7 +7,7 @@ RABBITMQ_USERNAME = 'guest'
 RABBITMQ_PASSWORD = 'guest'
 BLOCKED_CONNECTION_TIMEOUT = 300
 
-class Publisher:
+class RabbitMQPublisher:
     def __init__(self, host=RABBITMQ_HOST, port=RABBITMQ_PORT, queue=RABBITMQ_QUEUE):
         self.host = host
         self.port = port
@@ -41,7 +41,7 @@ class Publisher:
     def close(self):
         self.connection.close()
 
-class Consumer:
+class RabbitMQConsumer:
     def __init__(self, host=RABBITMQ_HOST, queue=RABBITMQ_QUEUE, port=RABBITMQ_PORT, username=RABBITMQ_USERNAME, password=RABBITMQ_PASSWORD, blocked_connection_timeout=BLOCKED_CONNECTION_TIMEOUT):
         self.host = host
         self.queue = queue
