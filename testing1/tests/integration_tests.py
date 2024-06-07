@@ -5,8 +5,6 @@ import traceback
 import time
 
 import sys
-sys.path.append('/home/src')
-from src import rabbitmq_helper
 
 RABBITMQ_HOST = "rabbitmq"
 RABBITMQ_PORT = 5672
