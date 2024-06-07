@@ -14,7 +14,9 @@ class KafkaProducer:
         self.port = port
         self.topic = topic
         self.producer = Producer({
-            'bootstrap.servers': f"{self.host}:{self.port}"
+            'bootstrap.servers': f"{self.host}:{self.port}",
+            'retries': 5,  # Retry up to 5 times to send a message
+            'on_delivery': self.delivery_report,  # Call delivery_report on message delivery
         })
 
     def list_kafka_topics(self):
@@ -40,7 +42,7 @@ class KafkaProducer:
         if err is not None:
             print(f"Message delivery failed: {err}")
         else:
-            print(f"Message delivered to {message.topic()} [{message.partition()}]")
+            print(f"Message delivered to Kafka {message.topic()} [{message.partition()}] with offset {message.offset()}")
 
     def produce_message(self, message):
         try:

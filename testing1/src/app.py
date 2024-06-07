@@ -11,8 +11,18 @@ data = {
     "timestamp": time.time()
 }
 
+data2 = {
+    "name": "Maria Doe",
+    "email": "maria.doe@example.com",
+    "id": 5678,
+    "timestamp": time.time()
+}
+
 # Convert the Python dictionary to a JSON string
 DATA_PAYLOAD = json.dumps(data)
+DATA_PAYLOAD2 = json.dumps(data2)
+
+time.sleep(60)
 
 def publish_rabbitmq():
     try:
@@ -28,6 +38,7 @@ def publish_kafka():
     try:
         kafka_producer = KafkaProducer()
         kafka_producer.produce_message(message=DATA_PAYLOAD)
+        kafka_producer.produce_message(message=DATA_PAYLOAD2)
         kafka_producer.close()
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -38,6 +49,5 @@ def main():
     publish_kafka()
 
 if __name__ == '__main__':
-    time.sleep(10)
     main()
 

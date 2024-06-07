@@ -1,4 +1,5 @@
 import pika
+import traceback
 
 RABBITMQ_HOST = "rabbitmq"
 RABBITMQ_PORT = 5672
@@ -16,27 +17,31 @@ class RabbitMQPublisher:
         self.channel = None
 
     def connect(self):
-        # Define RabbitMQ server credentials
-        credentials=pika.PlainCredentials(username=RABBITMQ_USERNAME, 
-                                        password=RABBITMQ_PASSWORD)
-        # Define connection parameters
-        parameters = pika.ConnectionParameters(credentials=credentials, 
-                                               host=self.host, 
-                                               port=self.port, 
-                                               blocked_connection_timeout=BLOCKED_CONNECTION_TIMEOUT)
+        try:
+            # Define RabbitMQ server credentials
+            credentials=pika.PlainCredentials(username=RABBITMQ_USERNAME, 
+                                            password=RABBITMQ_PASSWORD)
+            # Define connection parameters
+            parameters = pika.ConnectionParameters(credentials=credentials, 
+                                                host=self.host, 
+                                                port=self.port, 
+                                                blocked_connection_timeout=BLOCKED_CONNECTION_TIMEOUT)
 
-        # Establish connection
-        self.connection = pika.BlockingConnection(parameters)
+            # Establish connection
+            self.connection = pika.BlockingConnection(parameters)
 
-        # Create a new channel
-        self.channel = self.connection.channel()
+            # Create a new channel
+            self.channel = self.connection.channel()
 
-        # Declare a queue
-        self.channel.queue_declare(queue=self.queue, durable=True)
+            # Declare a queue
+            self.channel.queue_declare(queue=self.queue, durable=True)
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            traceback.print_exc()
 
     def send_message(self, message):
         self.channel.basic_publish(exchange='', routing_key=self.queue, body=message)
-        print(f" [x] Sent {message}")
+        print(f" [x] Sent {message} to rabbitmq queue {self.queue}")
 
     def close(self):
         self.connection.close()

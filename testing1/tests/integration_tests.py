@@ -15,7 +15,7 @@ BLOCKED_CONNECTION_TIMEOUT = 300
 
 MINN = 0
 MAXX = 1
-time.sleep(20)
+time.sleep(120)
 
 class TestRabbitMQ(unittest.TestCase):
     def setUp(self):
